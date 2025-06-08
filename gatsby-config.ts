@@ -33,8 +33,6 @@ const config: GatsbyConfig = {
           { name: `About Me`, slug: `/about` },
           { name: `Contact`, slug: `/contact` },
           { name: `Resume`, slug: `/resume` },
-          { name: `Projects`, slug: `/projects` },
-          { name: `Thoughts`, slug: `/thoughts` },
         ],
       },
     },

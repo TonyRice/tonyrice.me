@@ -16,6 +16,7 @@ export type JodieHomepageProps = {
     nodes: {
       slug: string
       title: string
+      defer: boolean // Add optional defer property
       cover: {
         childImageSharp: {
           gatsbyImageData: IGatsbyImageData
@@ -55,7 +56,10 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
     },
     __typename: 'CustomBlog',
   };
-  const rawItems = [...pages.nodes, ...projects.nodes, blogItem];
+
+  // Filter out projects with defer set to true
+  const filteredProjects = projects.nodes.filter(project => !project.defer);
+  const rawItems = [...pages.nodes, ...filteredProjects]; // Add blogItem here when the blog is REady todo
   const items = modifyGrid(rawItems as any); // Cast to any to avoid type error
   const itemsCount = items.length
   let divisor = 9
