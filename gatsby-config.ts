@@ -5,36 +5,53 @@ const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    // You can overwrite values here that are used for the SEO component
-    // You can also add new values here to query them like usual
-    // See all options: https://github.com/LekoArts/gatsby-themes/blob/main/themes/gatsby-theme-cara/gatsby-config.mjs
-    siteTitle: `Cara`,
-    siteTitleAlt: `Cara - Gatsby Starter Portfolio`,
-    siteHeadline: `Cara - Gatsby Theme from @lekoarts`,
-    siteUrl: `https://cara.lekoarts.de`,
-    siteDescription: `Playful and Colorful One-Page portfolio featuring Parallax effects and animations`,
+    siteTitle: `Tony Rice - Entrepreneur, Creator and Software Engineer`,
+    siteTitleAlt: `Tony Rice - Entrepreneur, Creator and Software Engineer`,
+    siteHeadline: `Tony Rice - Entrepreneur, Creator and Software Engineer`,
+    siteUrl: `https://tonyrice.me`,
+    siteDescription: `Basically my projects, resume, and a few other things.`,
+    siteDescriptionAlt: `Tony Rice - Portfolio and Resume`,
     siteImage: `/banner.jpg`,
     siteLanguage: `en`,
-    author: `@lekoarts_de`,
+    author: `@tonyrice`,
   },
   trailingSlash: `always`,
   plugins: [
     {
-      resolve: `@lekoarts/gatsby-theme-cara`,
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `thoughts`,
+        path: `content/thoughts`,
+      },
+    },
+    {
+      resolve: `@lekoarts/gatsby-theme-jodie`,
       // See the theme's README for all available options
-      options: {},
+      options: {
+        navigation: [
+          { name: `Home`, slug: `/` },
+          { name: `About Me`, slug: `/about` },
+          { name: `Contact`, slug: `/contact` },
+          { name: `Resume`, slug: `/resume` },
+          { name: `Projects`, slug: `/projects` },
+          { name: `Thoughts`, slug: `/thoughts` },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        output: `/`,
+      },
     },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Cara - @lekoarts/gatsby-theme-cara`,
-        short_name: `Cara`,
-        description: `Playful and Colorful One-Page portfolio featuring Parallax effects and animations`,
+        name: `jodie - @lekoarts/gatsby-theme-jodie`,
+        short_name: `jodie`,
+        description: `Image-heavy photography portfolio with colorful accents & customizable pages. Includes adaptive image grids powered by CSS grid and automatic image integration into projects.`,
         start_url: `/`,
-        background_color: `#141821`,
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
-        // theme_color: `#f6ad55`,
+        background_color: `#ffffff`,
         display: `standalone`,
         icons: [
           {

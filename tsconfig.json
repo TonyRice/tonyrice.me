@@ -9,12 +9,18 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    // Add these for Gatsby Node APIs specifically
+    "noEmit": true, // Don't emit JS, Gatsby handles transpilation
+    "isolatedModules": true // Ensures each file can be safely transpiled in isolation
   },
   "include": [
     "./src/**/*",
-    "./gatsby-node.ts",
+    "./gatsby-node.ts",          // For a root gatsby-node.ts (keep if you have one there)
     "./gatsby-config.ts",
-    "./plugins/**/*"
+    "./plugins/**/*",
+    // CRITICAL ADDITION FOR SHADOWED gatsby-node.ts
+    "./src/@lekoarts/gatsby-theme-jodie-core/**/*.ts", // This specifically targets your shadowed gatsby-node.ts
+    "./src/@lekoarts/gatsby-theme-jodie-core/**/*.tsx" // In case you have .tsx files in there too
   ]
 }

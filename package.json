@@ -1,11 +1,12 @@
 {
   "private": true,
-  "name": "cara",
-  "description": "Playful and Colorful One-Page portfolio featuring Parallax effects and animations",
-  "version": "0.2.16",
-  "author": "LekoArts",
+  "name": "tonyrice.me",
+  "description": "Landing page for Tony Rice, a software engineer, entreprenuer and creator.",
+  "homepage": "https://tonyrice.me",
+  "version": "0.1.10",
+  "author": "LekoArts & Tony Rice",
   "license": "0BSD",
-  "starter-name": "gatsby-starter-portfolio-cara",
+  "starter-name": "gatsby-starter-portfolio-jodie",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
@@ -16,9 +17,10 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@lekoarts/gatsby-theme-cara": "^5.1.7",
+    "@lekoarts/gatsby-theme-jodie": "^5.1.9",
     "gatsby": "^5.14.3",
     "gatsby-plugin-manifest": "^5.14.0",
+    "gatsby-plugin-sitemap": "^6.14.0",
     "gatsby-plugin-webpack-statoscope": "^1.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

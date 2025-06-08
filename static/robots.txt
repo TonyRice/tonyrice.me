@@ -1,0 +1,3 @@
+User-agent: *
+
+sitemap: https://tonyrice.me/sitemap-index.xml
