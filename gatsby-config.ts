@@ -18,13 +18,6 @@ const config: GatsbyConfig = {
   trailingSlash: `always`,
   plugins: [
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `thoughts`,
-        path: `content/thoughts`,
-      },
-    },
-    {
       resolve: `@lekoarts/gatsby-theme-jodie`,
       // See the theme's README for all available options
       options: {
@@ -50,6 +43,9 @@ const config: GatsbyConfig = {
         description: `Image-heavy photography portfolio with colorful accents & customizable pages. Includes adaptive image grids powered by CSS grid and automatic image integration into projects.`,
         start_url: `/`,
         background_color: `#ffffff`,
+        // This will impact how browsers show your PWA/website
+        // https://css-tricks.com/meta-theme-color-and-trickery/
+        // theme_color: `#b75e09`,
         display: `standalone`,
         icons: [
           {
@@ -63,6 +59,23 @@ const config: GatsbyConfig = {
             type: `image/png`,
           },
         ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: ["auto", "webp", "jpg"], // Disable AVIF to avoid Netlify build errors
+        },
+        failOnError: false, // Optional: don't fail build on image errors
+      },
+    },
+    {
+      resolve: `gatsby-transformer-sharp`,
+      options: {
+        defaults: {
+          formats: ["auto", "webp", "jpg"], // Disable AVIF here too
+        },
       },
     },
     // You can remove this plugin if you don't need it
