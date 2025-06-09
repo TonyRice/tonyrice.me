@@ -22,7 +22,6 @@ const config: GatsbyConfig = {
       // See the theme's README for all available options
       options: {
         navigation: [
-          { name: `Home`, slug: `/` },
           { name: `About Me`, slug: `/about` },
           { name: `Contact`, slug: `/contact` },
           { name: `Resume`, slug: `/resume` },
