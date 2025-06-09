@@ -65,7 +65,7 @@ const config: GatsbyConfig = {
       resolve: `gatsby-plugin-sharp`,
       options: {
         defaults: {
-          formats: ["auto", "webp", "jpg"], // Disable AVIF to avoid Netlify build errors
+          formats: ["webp", "jpg"], // Disable AVIF to avoid Netlify build errors
         },
         failOnError: false, // Optional: don't fail build on image errors
       },
