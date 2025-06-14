@@ -37,15 +37,12 @@ const config: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `jodie - @lekoarts/gatsby-theme-jodie`,
-        short_name: `jodie`,
-        description: `Image-heavy photography portfolio with colorful accents & customizable pages. Includes adaptive image grids powered by CSS grid and automatic image integration into projects.`,
+        name: `Tony Rice - Entrepreneur, Creator and Software Engineer`,
+        short_name: `tonyrice`,
+        description: `Portfolio, resume, and project showcase for Tony Rice, an entrepreneurial full-stack software engineer and creator. Explore my work, background, and ways to connect.`,
         start_url: `/`,
         background_color: `#ffffff`,
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
-        // theme_color: `#b75e09`,
-        display: `standalone`,
+        display: `browser`, // Prevents PWA install prompt
         icons: [
           {
             src: `/android-chrome-192x192.png`,
