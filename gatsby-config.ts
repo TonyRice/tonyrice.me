@@ -11,7 +11,7 @@ const config: GatsbyConfig = {
     siteUrl: `https://tonyrice.me`,
     siteDescription: `Basically my projects, resume, and a few other things.`,
     siteDescriptionAlt: `Tony Rice - Portfolio and Resume`,
-    siteImage: `/banner.jpg`,
+    siteImage: `/banner.png`,
     siteLanguage: `en`,
     author: `@tonyrice`,
   },
