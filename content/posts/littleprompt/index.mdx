@@ -1,6 +1,6 @@
 ---
 title: "Crafting Prompts in Node.js/TypeScript with Structure"
-shortTitle: "littleprompt"
+shortTitle: "\"Little Prompts\""
 slug: "/nodejs-typescript-structured-prompts"
 category: ""
 color: "#ffffff"
@@ -8,24 +8,28 @@ date: "2025-06-19"
 description: Learn how to build effective, structured prompts for LLMs in Node.js and TypeScript using a modern, chainable approach. Improve your AI prompt engineering workflow with best practices and code examples.
 tags: [nodejs, typescript, prompt-engineering, llm, ai, openai, developer-tools, mdx, prompt-library, gpt, chatgpt, prompt-design, software-engineering, code-examples, productivity, best-practices]
 keywords: [prompt engineering, node.js, typescript, LLM, openai, gpt, chatgpt, ai, developer tools, prompt library, structured prompts, chainable api, code examples, best practices, productivity, software engineering]
+cover: "./littleprompts.png"
+featured: true
 ---
 
-Prompt engineering is quickly becoming a core skill for developers working with large language models (LLMs) like OpenAI's GPT, Anthropic's Claude, and others. But as your projects grow, so does the complexity of your prompts. Messy string concatenation, scattered instructions, and unclear formatting can make your codebase hard to maintain and your AI outputs unpredictable.
+Hey, I'm Tony. If you're like me, you probably want your code (and your prompts) to just work—no fuss, no mess. I’ve been building stuff for a long time, and if there’s one thing I’ve learned, it’s that a little structure goes a long way, especially when you’re wrangling large language models (LLMs) like GPT or Claude. 
 
-In this post, you'll learn how to build robust, maintainable prompts for LLMs in Node.js and TypeScript using a modern, chainable approach. We'll cover best practices, code examples, and a tiny library that makes prompt design easier for developers.
+Let’s be real: prompt engineering can get out of hand fast. You start with a simple string, and before you know it, you’ve got a spaghetti mess of instructions, random formatting, and a headache trying to debug why your AI is suddenly writing Shakespearean sonnets when you just wanted a JSON object. Been there, dude.
 
-## Why Structured Prompts for LLMs?
+So, here’s my take on building prompts in Node.js and TypeScript: keep it structured, keep it chainable, and don’t overthink it. I’ll show you how I do it, share some code, and maybe save you a few hours of frustration.
 
-- **Clarity:** Well-structured prompts lead to more predictable and accurate LLM responses.
-- **Reusability:** Modular prompt components (like personas, tones, and formatting rules) can be reused across your codebase.
-- **Maintainability:** Chainable APIs and object-based instructions are easier to update and reason about than long, concatenated strings.
-- **Type Safety:** TypeScript support ensures your prompt logic is robust and less error-prone.
+## Why Bother Structuring Prompts?
 
-## Meet `littleprompt`: A Chainable Prompt Library for Node.js/TypeScript
+- **Clarity:** If you want the AI to give you good answers, you gotta be clear. No one likes guessing games—not even a language model.
+- **Reusability:** Build little prompt pieces you can use again and again. Like LEGOs, but for your brain.
+- **Maintainability:** When you come back to your code in six months, you’ll thank yourself for not making it a dumpster fire.
+- **Type Safety:** TypeScript is your friend. Trust me, it’ll catch your silly mistakes before they become real problems.
 
-[`littleprompt`](https://www.npmjs.com/package/littleprompt) is a tiny, chainable Node.js/TypeScript library designed to help you build effective and structured prompts by incrementally adding instructions. It’s not magic, but it will make your prompt engineering workflow a lot more enjoyable.
+## Meet `littleprompt`: My Go-To Prompt Library
 
-### Installation
+[`littleprompt`](https://www.npmjs.com/package/littleprompt) is a tiny, chainable library for Node.js/TypeScript. It lets you build prompts step by step, adding instructions as you go. It’s not magic, but it makes life easier—especially if you’re a little neurodivergent like me and need things to be, well, not chaos.
+
+### Install It
 
 ```bash
 npm install littleprompt
@@ -33,24 +37,23 @@ npm install littleprompt
 
 ## Building Prompts: The Chainable Way
 
-Instead of concatenating strings, you can chain together system instructions, modifiers, and user queries:
+Forget string soup. Here’s how I build prompts:
 
 ```typescript
 import prompt from "littleprompt";
 
-// Chain system instructions, modifiers, and the user's query together.
 const myPrompt = prompt
-  .system({ type: "engineer", name: "Johnson" }) // Start with an object
+  .system({ type: "engineer", name: "Johnson" })
   .concise()
   .truthful()
-  .system("is funny") // Add more instructions as a string
-  .system({ responseType: "structuredJSON" }) // Even add formatting rules
-  .user("What are the first 3 steps to making a website?"); // Finally, add the user's question
+  .system("is funny")
+  .system({ responseType: "structuredJSON" })
+  .user("What are the first 3 steps to making a website?");
 
 console.log(myPrompt.build());
 ```
 
-**Resulting Prompt:**
+**What you get:**
 
 ```
 System: 
@@ -66,11 +69,11 @@ System:
 User: What are the first 3 steps to making a website?
 ```
 
-## Key Features for Developers
+## Stuff That Makes Life Easier
 
-### 1. Chainable System Instructions
+### 1. Stack System Instructions
 
-Add as many system instructions as you need, using either strings or objects:
+Add as many as you want, in whatever order makes sense:
 
 ```typescript
 prompt
@@ -78,9 +81,9 @@ prompt
   .system({ persona: "Shakespearean poet", mood: "dramatic" });
 ```
 
-### 2. User Queries and Problem Statements
+### 2. User Questions
 
-Set the user's question or problem:
+Set the user’s question or problem. Simple:
 
 ```typescript
 prompt
@@ -90,18 +93,18 @@ prompt
 
 ### 3. One-Liner Modifiers
 
-Handy shortcuts for common instructions:
+Handy shortcuts for common stuff:
 
-- `.concise()`: Short, to-the-point answers.
-- `.detailed()`: Comprehensive, detailed responses.
-- `.truthful()`: Admit when you don't know.
-- `.json(schema)`: Ask for a JSON response, optionally with a schema.
-- `.mood(feeling)`: Set the tone, e.g., `.mood("funny")`.
-- `.expert(field)`: Act as an expert, e.g., `.expert("quantum physics")`.
+- `.concise()`: Short and sweet.
+- `.detailed()`: Go deep.
+- `.truthful()`: Admit when you don’t know.
+- `.json(schema)`: Ask for a JSON response, with or without a schema.
+- `.mood(feeling)`: Set the vibe, e.g., `.mood("funny")`.
+- `.expert(field)`: Be the expert, e.g., `.expert("quantum physics")`.
 
 ### 4. Reusable Personas
 
-Create reusable prompt chains for consistent personas:
+Make little prompt factories for consistent vibes:
 
 ```typescript
 import prompt, { type Prompt } from "littleprompt";
@@ -122,7 +125,7 @@ console.log(reviewPrompt);
 
 ## Try It Yourself: Node.js & TypeScript Prompt Engineering Examples
 
-Check out the [`examples/`](./examples) directory in the repo for ready-to-run Node.js and TypeScript code samples that show how to:
+Check out the [`examples/`](https://github.com/TonyRice/littleprompt/tree/main/examples) directory in the littleprompt repo for ready-to-run Node.js and TypeScript code samples that show how to:
 
 - Build prompts for OpenAI, Anthropic, and other LLM APIs
 - Use chainable prompt logic in real-world projects
@@ -130,6 +133,4 @@ Check out the [`examples/`](./examples) directory in the repo for ready-to-run N
 
 ---
 
-Prompt engineering doesn't have to be messy. With a structured, chainable approach, you can build powerful, maintainable prompts that get the best out of today's LLMs—right from your Node.js or TypeScript project.
-
-Happy prompting! 🤏
+Prompt engineering doesn’t have to be a mess. With a little structure and a chainable approach, you can build prompts that work, are easy to read, and don’t make you want to pull your hair out. If you’ve got questions or want to swap ideas, hit me up. Happy prompting, dude! 🤏

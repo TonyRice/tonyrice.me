@@ -81,6 +81,7 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = function (args, options)
     const fieldData = {
       slug: node.frontmatter?.slug ? String(node.frontmatter.slug) : undefined,
       title: String(node.frontmatter?.title),
+      shortTitle: String(node.frontmatter?.shortTitle),
       date: String(node.frontmatter?.date),
       color: node.frontmatter?.color ? String(node.frontmatter.color) : undefined,
       cover,

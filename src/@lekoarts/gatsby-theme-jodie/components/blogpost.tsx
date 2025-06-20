@@ -61,8 +61,27 @@ const BlogPost: React.FC<React.PropsWithChildren<PageProps<JodieBlogPostProps>>>
           style={{ width: 120, height: 120, objectFit: 'cover', borderRadius: 8, marginBottom: 24 }}
         />
       )}
-      <div sx={{ fontWeight: 'bold' }}>
-        <a href="https://medium.com/@iamtonyrice" target="_blank" rel="noopener noreferrer" sx={{ color: 'primary' }}>View more posts on Medium</a>
+      {/* More posts section */}
+      <div sx={{ mt: 5, textAlign: 'center' }}>
+        <a href="/blog/" sx={{
+          display: 'inline-block',
+          px: 4,
+          py: 2,
+          backgroundColor: 'primary',
+          color: 'background',
+          borderRadius: 6,
+          fontWeight: 'bold',
+          textDecoration: 'none',
+          fontSize: 2,
+          transition: 'background 0.2s',
+          ':hover': { backgroundColor: 'secondary', color: 'primary' },
+        }}>
+          More posts
+        </a>
+        <div sx={{ my: 3, fontWeight: 'bold', color: 'text' }}>or</div>
+        <div sx={{ fontWeight: 'bold' }}>
+          <a href="https://medium.com/@iamtonyrice" target="_blank" rel="noopener noreferrer" sx={{ color: 'primary' }}>View more posts on Medium</a>
+        </div>
       </div>
     </div>
   </Layout>

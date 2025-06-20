@@ -19,12 +19,11 @@ const config: GatsbyConfig = {
   plugins: [
     {
       resolve: `@lekoarts/gatsby-theme-jodie`,
-      // See the theme's README for all available options
       options: {
         navigation: [
           { name: `About Me`, slug: `/about` },
+          { name: `Blog`, slug: `/blog` },
           { name: `Contact`, slug: `/contact` },
-          { name: `Resume`, slug: `/resume` },
           { name: `Portfolio`, slug: `/portfolio` },
 
         ],
@@ -81,6 +80,13 @@ const config: GatsbyConfig = {
       options: {
         name: `posts`,
         path: `${__dirname}/content/posts`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `static-assets`,
+        path: `${__dirname}/static/`,
       },
     },
     // You can remove this plugin if you don't need it
