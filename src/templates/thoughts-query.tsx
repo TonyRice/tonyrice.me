@@ -9,6 +9,8 @@ export const query = graphql`
   {
     thoughts: allThought(sort: { date: DESC }) {
       nodes {
+        title
+        date(formatString: "MMMM DD, YYYY")
         shortTitle
         slug
         cover {

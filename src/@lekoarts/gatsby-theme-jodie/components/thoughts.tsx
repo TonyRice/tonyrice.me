@@ -10,22 +10,25 @@ import { visuallyHidden } from "@lekoarts/gatsby-theme-jodie/src/components/../s
 
 export type JodieThoughtsProps = {
   thoughts: {
-    nodes: {
+    nodes: Array<{
+      title: string
       shortTitle: string
       slug: string
-      cover: {
-        childImageSharp: {
-          gatsbyImageData: IGatsbyImageData
+      date?: string 
+      cover?: {
+        childImageSharp?: {
+          gatsbyImageData?: IGatsbyImageData
         }
       }
-    }[]
+      defer?: boolean
+    }>
   }
 }
 
 const Thoughts: React.FC<PageProps<JodieThoughtsProps>> = ({ data: { thoughts } }) => (
   <Layout>
     <h1 sx={visuallyHidden} data-testid="page-title">
-      My Thoughts, Ideas & Ramblings
+      My Blog
     </h1>
     <div
       sx={{
@@ -35,10 +38,14 @@ const Thoughts: React.FC<PageProps<JodieThoughtsProps>> = ({ data: { thoughts } 
       }}
     >
       {thoughts.nodes.length > 0 ? (
-        thoughts.nodes.map((thought) => (
+        thoughts.nodes.filter(thought => !thought.defer).map((thought) => (
           <GridItem to={thought.slug} key={thought.slug} data-testid={thought.shortTitle}>
-            <GatsbyImage image={thought.cover.childImageSharp.gatsbyImageData} alt="" />
-            <span>{thought.shortTitle}</span>
+            {thought.cover?.childImageSharp?.gatsbyImageData ? (
+              <GatsbyImage image={thought.cover.childImageSharp.gatsbyImageData} alt="Image" />
+            ) : (
+              <img src="/blog_image.png" alt="Filler" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8, display: 'block' }} />
+            )}
+            <span>{thought.shortTitle || thought.title}</span>
           </GridItem>
         ))
       ) : (
@@ -46,8 +53,8 @@ const Thoughts: React.FC<PageProps<JodieThoughtsProps>> = ({ data: { thoughts } 
       )}
     </div>
   </Layout>
-)
+);
 
-export default Thoughts
+export default Thoughts;
 
 export const Head: HeadFC<JodieThoughtsProps> = ({ location }) => <Seo title="Thoughts" pathname={location.pathname} />

@@ -74,14 +74,16 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = function (args, options)
   }
   const fileNode = getNode(node.parent as string) as FileSystemNode | undefined;
   const source = fileNode?.sourceInstanceName;
+  
   // Only create Thought nodes
   if (source === "thoughts") {
+    const cover = node.frontmatter?.cover ? node.frontmatter.cover : "/blog_image.jpg";
     const fieldData = {
       slug: node.frontmatter?.slug ? String(node.frontmatter.slug) : undefined,
       title: String(node.frontmatter?.title),
       date: String(node.frontmatter?.date),
       color: node.frontmatter?.color ? String(node.frontmatter.color) : undefined,
-      cover: node.frontmatter?.cover,
+      cover,
       defer: node.frontmatter?.defer ?? false,
       contentFilePath: fileNode?.absolutePath,
     };

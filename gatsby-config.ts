@@ -25,6 +25,8 @@ const config: GatsbyConfig = {
           { name: `About Me`, slug: `/about` },
           { name: `Contact`, slug: `/contact` },
           { name: `Resume`, slug: `/resume` },
+          { name: `Portfolio`, slug: `/portfolio` },
+
         ],
       },
     },
@@ -61,17 +63,24 @@ const config: GatsbyConfig = {
       resolve: `gatsby-plugin-sharp`,
       options: {
         defaults: {
-          formats: ["webp", "jpg"], // Disable AVIF to avoid Netlify build errors
+          formats: ["auto", "webp", "jpg"], 
         },
-        failOnError: false, // Optional: don't fail build on image errors
+        failOnError: false, 
       },
     },
     {
       resolve: `gatsby-transformer-sharp`,
       options: {
         defaults: {
-          formats: ["auto", "webp", "jpg"], // Disable AVIF here too
+          formats: ["auto", "webp", "jpg"], 
         },
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `thoughts`,
+        path: `${__dirname}/content/thoughts`,
       },
     },
     // You can remove this plugin if you don't need it

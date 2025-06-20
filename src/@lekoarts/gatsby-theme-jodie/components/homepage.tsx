@@ -42,8 +42,8 @@ export type JodieHomepageProps = {
 const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, projects } }) => {
   // Add a custom blog grid item as the last item
   const blogItem = {
-    slug: '/thoughts/',
-    title: 'Thought Dumps',
+    slug: '/blog/',
+    title: 'My Blog',
     cover: {
       childImageSharp: {
         gatsbyImageData: {
@@ -59,7 +59,7 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
 
   // Filter out projects with defer set to true
   const filteredProjects = projects.nodes.filter(project => !project.defer);
-  const rawItems = [...pages.nodes, ...filteredProjects]; // Add blogItem here when the blog is REady todo
+  const rawItems = [...pages.nodes, ...filteredProjects, blogItem]; // Add blogItem here when the blog is REady todo
   const items = modifyGrid(rawItems as any); // Cast to any to avoid type error
   const itemsCount = items.length
   let divisor = 9
@@ -103,7 +103,7 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
             ))
           ) : (
             <div sx={{ padding: 3 }}>
-              No projects and pages found at the time.
+              Please come back later.
             </div>
           )}
         </div>
