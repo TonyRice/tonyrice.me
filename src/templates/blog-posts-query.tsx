@@ -1,13 +1,13 @@
 import { graphql } from "gatsby"
-import ThoughtsComponent, { Head } from "../@lekoarts/gatsby-theme-jodie-core/components/thoughts"
+import BlogPostsComponent, { Head } from "../@lekoarts/gatsby-theme-jodie-core/components/blogposts"
 
-export default ThoughtsComponent
+export default BlogPostsComponent
 
 export { Head }
 
 export const query = graphql`
   {
-    thoughts: allThought(sort: { date: DESC }) {
+    blogs: allBlogPost(sort: { date: DESC }) {
       nodes {
         title
         date(formatString: "MMMM DD, YYYY")

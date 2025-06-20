@@ -1,5 +1,6 @@
 /** @jsx jsx */
-import { jsx, Heading } from "theme-ui"
+import { jsx, Heading as ThemeUIHeading } from "theme-ui"
+import { Heading } from "@theme-ui/components"
 import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
 import { transparentize } from "polished"
@@ -7,8 +8,8 @@ import { IGatsbyImageData, GatsbyImage } from "gatsby-plugin-image"
 import Layout from "@lekoarts/gatsby-theme-jodie/src/components/layout"
 import Seo from "@lekoarts/gatsby-theme-jodie/src/components/seo"
 
-export type JodieThoughtProps = {
-  thought: {
+export type JodieBlogPostProps = {
+  blog: {
     excerpt: string
     color: string
     date: string
@@ -34,23 +35,23 @@ export type JodieThoughtProps = {
   }
 }
 
-const Thought: React.FC<React.PropsWithChildren<PageProps<JodieThoughtProps>>> = ({
-  data: { thought, images },
+const BlogPost: React.FC<React.PropsWithChildren<PageProps<JodieBlogPostProps>>> = ({
+  data: { blog, images },
   children,
 }) => (
-  <Layout color={thought.color || undefined}>
+  <Layout color={blog.color || undefined}>
     <div sx={{ variant: `content.project` }}>
-      <div sx={{ fontSize: 2, textTransform: `uppercase`, letterSpacing: `wider`, mb: 2 }}>{thought.category}</div>
+      <div sx={{ fontSize: 2, textTransform: `uppercase`, letterSpacing: `wider`, mb: 2 }}>{blog.category}</div>
       <Heading as="h1" variant="styles.h1" sx={{ mt: 0 }}>
-        {thought.title}
+        {blog.title}
       </Heading>
-      <div sx={{ color: 'text', fontSize: 2, mb: 3, fontWeight: 'bold' }}>{thought.date}</div>
+      <div sx={{ color: 'text', fontSize: 2, mb: 3, fontWeight: 'bold' }}>{blog.date}</div>
       <div sx={{ maxWidth: `70ch`, my: 4 }}>{children}</div>
       {/* Show cover image if available, otherwise show filler image */}
-      {thought.cover?.childImageSharp?.resize?.src ? (
+      {blog.cover?.childImageSharp?.resize?.src ? (
         <img
-          src={thought.cover.childImageSharp.resize.src}
-          alt={thought.title}
+          src={blog.cover.childImageSharp.resize.src}
+          alt={blog.title}
           style={{ width: 120, height: 120, objectFit: 'cover', borderRadius: 8, marginBottom: 24 }}
         />
       ) : (
@@ -67,17 +68,16 @@ const Thought: React.FC<React.PropsWithChildren<PageProps<JodieThoughtProps>>> =
   </Layout>
 )
 
+export default BlogPost
 
-export default Thought
-
-export const Head: HeadFC<JodieThoughtProps> = ({ data: { thought }, location }) => (
+export const Head: HeadFC<JodieBlogPostProps> = ({ data: { blog }, location }) => (
   <Seo
-    title={thought.title}
-    description={thought.excerpt}
+    title={blog.title}
+    description={blog.excerpt}
     pathname={location.pathname}
     image={
-      thought.cover && thought.cover.childImageSharp && thought.cover.childImageSharp.resize
-        ? thought.cover.childImageSharp.resize.src
+      blog.cover && blog.cover.childImageSharp && blog.cover.childImageSharp.resize
+        ? blog.cover.childImageSharp.resize.src
         : "/blog_image.png"
     }
   />

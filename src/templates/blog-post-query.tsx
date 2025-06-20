@@ -1,13 +1,13 @@
 import { graphql } from "gatsby"
-import ThoughtComponent, { Head } from "../@lekoarts/gatsby-theme-jodie-core/components/thought"
+import BlogPostComponent, { Head } from "../@lekoarts/gatsby-theme-jodie-core/components/blogpost"
 
-export default ThoughtComponent
+export default BlogPostComponent
 
 export { Head }
 
 export const query = graphql`
   query ($slug: String!, $formatString: String!, $relativeDirectory: String!) {
-    thought(slug: { eq: $slug }) {
+    blog: blogPost(slug: { eq: $slug }) {
       excerpt
       color
       date(formatString: $formatString)

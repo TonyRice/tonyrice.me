@@ -79,8 +79,8 @@ const config: GatsbyConfig = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `thoughts`,
-        path: `${__dirname}/content/thoughts`,
+        name: `posts`,
+        path: `${__dirname}/content/posts`,
       },
     },
     // You can remove this plugin if you don't need it

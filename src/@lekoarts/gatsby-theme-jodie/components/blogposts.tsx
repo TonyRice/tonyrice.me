@@ -8,8 +8,8 @@ import Seo from "@lekoarts/gatsby-theme-jodie/src/components/seo"
 import GridItem from "@lekoarts/gatsby-theme-jodie/src/components/grid-item"
 import { visuallyHidden } from "@lekoarts/gatsby-theme-jodie/src/components/../styles/utils"
 
-export type JodieThoughtsProps = {
-  thoughts: {
+export type JodieBlogPostsProps = {
+  blogs: {
     nodes: Array<{
       title: string
       shortTitle: string
@@ -25,7 +25,7 @@ export type JodieThoughtsProps = {
   }
 }
 
-const Thoughts: React.FC<PageProps<JodieThoughtsProps>> = ({ data: { thoughts } }) => (
+const BlogPosts: React.FC<PageProps<JodieBlogPostsProps>> = ({ data: { blogs } }) => (
   <Layout>
     <h1 sx={visuallyHidden} data-testid="page-title">
       My Blog
@@ -37,15 +37,15 @@ const Thoughts: React.FC<PageProps<JodieThoughtsProps>> = ({ data: { thoughts } 
         gridAutoRows: `50vw`,
       }}
     >
-      {thoughts.nodes.length > 0 ? (
-        thoughts.nodes.filter(thought => !thought.defer).map((thought) => (
-          <GridItem to={thought.slug} key={thought.slug} data-testid={thought.shortTitle}>
-            {thought.cover?.childImageSharp?.gatsbyImageData ? (
-              <GatsbyImage image={thought.cover.childImageSharp.gatsbyImageData} alt="Image" />
+      {blogs.nodes.length > 0 ? (
+        blogs.nodes.filter(blog => !blog.defer).map((blog) => (
+          <GridItem to={blog.slug} key={blog.slug} data-testid={blog.shortTitle}>
+            {blog.cover?.childImageSharp?.gatsbyImageData ? (
+              <GatsbyImage image={blog.cover.childImageSharp.gatsbyImageData} alt="Image" />
             ) : (
               <img src="/blog_image.png" alt="Filler" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8, display: 'block' }} />
             )}
-            <span>{thought.shortTitle || thought.title}</span>
+            <span>{blog.shortTitle || blog.title}</span>
           </GridItem>
         ))
       ) : (
@@ -55,6 +55,6 @@ const Thoughts: React.FC<PageProps<JodieThoughtsProps>> = ({ data: { thoughts } 
   </Layout>
 );
 
-export default Thoughts;
+export default BlogPosts;
 
-export const Head: HeadFC<JodieThoughtsProps> = ({ location }) => <Seo title="Thoughts" pathname={location.pathname} />
+export const Head: HeadFC<JodieBlogPostsProps> = ({ location }) => <Seo title="Blog" pathname={location.pathname} />

@@ -6,25 +6,25 @@ import type { GatsbyNode, NodePluginArgs, CreateSchemaCustomizationArgs, CreateP
 import type { FileSystemNode } from "gatsby-source-filesystem";
 import path from "path";
 
-const thoughtTemplate = path.resolve(__dirname, "src/templates/thought-query.tsx");
-const thoughtsTemplate = path.resolve(__dirname, "src/templates/thoughts-query.tsx");
+const blogpostTemplate = path.resolve(__dirname, "src/templates/blog-post-query.tsx");
+const blogpostsTemplate = path.resolve(__dirname, "src/templates/blog-posts-query.tsx");
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = function (args, options) {
   const themeOptions = withDefaults(options as any);
   const { createTypes, createFieldExtension } = args.actions;
-  const { basePath, thoughtsPrefix } = themeOptions;
+  const { basePath, blogPrefix } = themeOptions;
   createFieldExtension({
-    name: `slugifyThought`,
+    name: `slugifyBlogPost`,
     extend() {
       return {
         resolve(source: { slug: string; title: string }) {
-          return slugify({ slug: source.slug, title: source.title }, `${basePath}/${thoughtsPrefix}`);
+          return slugify({ slug: source.slug, title: source.title }, `${basePath}/${blogPrefix}`);
         },
       };
     },
   });
   createFieldExtension({
-    name: `mdxpassthroughThought`,
+    name: `mdxpassthroughBlogPost`,
     args: {
       fieldName: `String!`,
     },
@@ -35,11 +35,11 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     },
   });
   createTypes(`
-    interface Thought implements Node {
+    interface BlogPost implements Node {
       id: ID!
       title: String!
-      slug: String! @slugifyThought
-      date: Date! @dateformat
+      slug: String! @slugifyBlogPost
+      date: String! @dateformat
       color: String
       cover: File @fileByRelativePath
       excerpt(pruneLength: Int = 160): String!
@@ -48,13 +48,13 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       category: String
       defer: Boolean
     }
-    type MdxThought implements Node & Thought {
+    type MdxBlogPost implements Node & BlogPost {
       title: String!
-      slug: String! @slugifyThought
-      date: Date! @dateformat
+      slug: String! @slugifyBlogPost
+      date: String! @dateformat
       color: String
       cover: File @fileByRelativePath
-      excerpt(pruneLength: Int = 140): String! @mdxpassthroughThought(fieldName: "excerpt")
+      excerpt(pruneLength: Int = 140): String! @mdxpassthroughBlogPost(fieldName: "excerpt")
       contentFilePath: String!
       shortTitle: String
       category: String
@@ -68,15 +68,15 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = function (args, options)
   const node = args.node as any;
   const { actions, getNode, createNodeId, createContentDigest } = args;
   const { createNode, createParentChildLink } = actions;
-  const { thoughtsPath } = themeOptions;
+  const { blogPath } = themeOptions;
   if (node.internal.type !== `Mdx`) {
     return;
   }
   const fileNode = getNode(node.parent as string) as FileSystemNode | undefined;
   const source = fileNode?.sourceInstanceName;
   
-  // Only create Thought nodes
-  if (source === "thoughts") {
+  // Only create BlogPost nodes
+  if (source === "posts") {
     const cover = node.frontmatter?.cover ? node.frontmatter.cover : "/blog_image.jpg";
     const fieldData = {
       slug: node.frontmatter?.slug ? String(node.frontmatter.slug) : undefined,
@@ -87,20 +87,20 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = function (args, options)
       defer: node.frontmatter?.defer ?? false,
       contentFilePath: fileNode?.absolutePath,
     };
-    const mdxThoughtId = createNodeId(`${node.id} >>> MdxThought`);
+    const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`);
     createNode({
       ...fieldData,
-      id: mdxThoughtId,
+      id: mdxBlogPostId,
       parent: node.id,
       children: [],
       internal: {
-        type: `MdxThought`,
+        type: `MdxBlogPost`,
         contentDigest: createContentDigest(fieldData),
         content: JSON.stringify(fieldData),
-        description: `Mdx implementation of the Thought interface`,
+        description: `Mdx implementation of the BlogPost interface`,
       },
     });
-    const childNode = getNode(mdxThoughtId);
+    const childNode = getNode(mdxBlogPostId);
     if (childNode) {
       createParentChildLink({ parent: node, child: childNode });
     }
@@ -112,22 +112,22 @@ export const createPages: GatsbyNode["createPages"] = async function (args, opti
   const createPage = args.actions.createPage;
   const graphql = args.graphql;
   const reporter = args.reporter;
-  const { basePath, thoughtsUrl, formatString } = themeOptions;
+  const { basePath, blogUrl, formatString } = themeOptions;
 
-  // Thoughts listing page
+  // Blog posts listing page
   createPage({
-    path: `/${basePath}/${thoughtsUrl}`.replace(/\/\/+/, "/"),
-    component: thoughtsTemplate,
+    path: `/${basePath}/${blogUrl}`.replace(/\/\/+/, "/"),
+    component: blogpostsTemplate,
   });
 
-  // Individual Thoughts pages
+  // Individual BlogPost pages
   const result = await graphql(`
     {
-      allThought(sort: { date: DESC }) {
+      allBlogPost(sort: { date: DESC }) {
         nodes {
           slug
           contentFilePath
-          ... on MdxThought {
+          ... on MdxBlogPost {
             parent {
               ... on Mdx {
                 parent {
@@ -143,19 +143,19 @@ export const createPages: GatsbyNode["createPages"] = async function (args, opti
     }
   `);
   if (result.errors) {
-    reporter.panicOnBuild(`There was an error loading your thoughts`, result.errors);
+    reporter.panicOnBuild(`There was an error loading your blog posts`, result.errors);
     return;
   }
-  const thoughts = (result.data as any).allThought.nodes;
-  if (thoughts && thoughts.length > 0) {
-    thoughts.forEach((thought: any) => {
+  const blogPosts = (result.data as any).allBlogPost.nodes;
+  if (blogPosts && blogPosts.length > 0) {
+    blogPosts.forEach((blogPost: any) => {
       createPage({
-        path: thought.slug,
-        component: `${thoughtTemplate}?__contentFilePath=${thought.contentFilePath}`,
+        path: blogPost.slug,
+        component: `${blogpostTemplate}?__contentFilePath=${blogPost.contentFilePath}`,
         context: {
-          slug: thought.slug,
+          slug: blogPost.slug,
           formatString,
-          relativeDirectory: thought.parent?.parent?.relativeDirectory,
+          relativeDirectory: blogPost.parent?.parent?.relativeDirectory,
         },
       });
     });
