@@ -15,6 +15,8 @@ export type JodieBlogPostsProps = {
       shortTitle: string
       slug: string
       date?: string 
+      homeIndex?: number
+      featured?: boolean
       cover?: {
         childImageSharp?: {
           gatsbyImageData?: IGatsbyImageData

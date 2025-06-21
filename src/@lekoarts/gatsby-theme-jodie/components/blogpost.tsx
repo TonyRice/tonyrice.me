@@ -17,6 +17,8 @@ export type JodieBlogPostProps = {
     title: string
     shortTitle: string
     category: string
+    homeIndex?: number
+    featured?: boolean
     cover: {
       childImageSharp: {
         resize: {

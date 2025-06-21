@@ -6,8 +6,8 @@ import type { GatsbyNode, NodePluginArgs, CreateSchemaCustomizationArgs, CreateP
 import type { FileSystemNode } from "gatsby-source-filesystem";
 import path from "path";
 
-const blogpostTemplate = path.resolve(__dirname, "src/templates/blog-post-query.tsx");
-const blogpostsTemplate = path.resolve(__dirname, "src/templates/blog-posts-query.tsx");
+const blogpostTemplate = path.resolve(__dirname, "src/templates/blogpost-query.tsx");
+const blogpostsTemplate = path.resolve(__dirname, "src/templates/blogposts-query.tsx");
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = function (args, options) {
   const themeOptions = withDefaults(options as any);
@@ -41,6 +41,8 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       slug: String! @slugifyBlogPost
       date: String! @dateformat
       color: String
+      homeIndex: Int!
+      featured: Boolean!
       cover: File @fileByRelativePath
       excerpt(pruneLength: Int = 160): String!
       contentFilePath: String!
@@ -53,6 +55,8 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       slug: String! @slugifyBlogPost
       date: String! @dateformat
       color: String
+      homeIndex: Int!
+      featured: Boolean!
       cover: File @fileByRelativePath
       excerpt(pruneLength: Int = 140): String! @mdxpassthroughBlogPost(fieldName: "excerpt")
       contentFilePath: String!
@@ -86,6 +90,8 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = function (args, options)
       color: node.frontmatter?.color ? String(node.frontmatter.color) : undefined,
       cover,
       defer: node.frontmatter?.defer ?? false,
+      featured: node.frontmatter?.featured ?? false,
+      homeIndex: node.frontmatter?.homeIndex ?? -1,
       contentFilePath: fileNode?.absolutePath,
     };
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`);

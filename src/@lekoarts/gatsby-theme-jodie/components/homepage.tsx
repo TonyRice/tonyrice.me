@@ -10,13 +10,15 @@ import locales from "../locales"
 import { visuallyHidden } from "@lekoarts/gatsby-theme-jodie/src/styles/utils"
 import modifyGrid from "../utils/modify-grid"
 import Seo from "@lekoarts/gatsby-theme-jodie/src/components/seo"
+import { Tracing } from "node:trace_events"
 
 export type JodieHomepageProps = {
   projects: {
     nodes: {
       slug: string
       title: string
-      defer: boolean // Add optional defer property
+      shortTitle: Tracing
+      defer: boolean
       cover: {
         childImageSharp: {
           gatsbyImageData: IGatsbyImageData
@@ -37,15 +39,33 @@ export type JodieHomepageProps = {
       __typename: "MdxPage"
     }[]
   }
+  blogs?: {
+    nodes: Array<{
+      slug: string
+      title: string
+      shortTitle?: string
+      date?: string
+      featured?: boolean
+      homeIndex?: number
+      defer?: boolean
+      cover?: {
+        childImageSharp?: {
+          gatsbyImageData?: IGatsbyImageData
+        }
+      }
+      __typename: string
+    }>
+  }
 }
 
-const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, projects } }) => {
+const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, projects, blogs } }) => {
   // Add a custom blog grid item as the last item
   const blogItem = {
     slug: '/blog/',
-    title: 'My Blog',
+    title: 'My Blog',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    defer: false,
     cover: {
-      childImageSharp: {
+      childImageSharp: {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
         gatsbyImageData: {
           images: { fallback: { src: '/blog_image.png' } },
           layout: 'constrained' as any, // Cast to any to avoid type error
@@ -54,14 +74,52 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
         }
       }
     },
-    __typename: 'CustomBlog',
+    __typename: 'MdxProject',
   };
+
+  // Find the first blog post with a 'featured' property set to true, if available
+  let featuredBlog = null;
+  let homeIndex: number | null = null;
+  if (blogs && blogs.nodes && blogs.nodes.length > 0) {
+    featuredBlog = blogs.nodes.find(blog => (blog as any).featured);
+    if (featuredBlog && typeof (featuredBlog as any).homeIndex === 'number') {
+      homeIndex = (featuredBlog as any).homeIndex;
+    }
+  }
+
+  // Prepare the featured blog item if found
+  const featuredBlogItem = featuredBlog
+    ? {
+        slug: featuredBlog.slug,
+        title: featuredBlog.title,
+        defer: false,
+        cover: featuredBlog.cover && featuredBlog.cover.childImageSharp && featuredBlog.cover.childImageSharp.gatsbyImageData
+          ? { childImageSharp: { gatsbyImageData: featuredBlog.cover.childImageSharp.gatsbyImageData } }
+          : blogItem.cover,
+        __typename: 'MdxProject',
+      }
+    : null;
 
   // Filter out projects with defer set to true
   const filteredProjects = projects.nodes.filter(project => !project.defer);
-  const rawItems = [...pages.nodes, ...filteredProjects, blogItem]; // Add blogItem here when the blog is REady todo
+  let rawItems: typeof filteredProjects = [...pages.nodes, ...filteredProjects];
+
+  // Insert featured blog at the specified homeIndex, or after blogItem if homeIndex is -1/null
+  if (featuredBlogItem) {
+    if (homeIndex !== null && homeIndex >= 0 && homeIndex <= rawItems.length) {
+      rawItems = [
+        ...rawItems.slice(0, homeIndex),
+        featuredBlogItem ? featuredBlogItem : blogItem,
+        ...rawItems.slice(homeIndex)
+      ];
+    } else {
+      rawItems.push(featuredBlogItem ? featuredBlogItem : blogItem);
+    }
+  } else {
+    rawItems.push(blogItem);
+  }
   const items = modifyGrid(rawItems as any); // Cast to any to avoid type error
-  const itemsCount = items.length
+  const itemsCount = items.length;
   let divisor = 9
 
   for (let i = 0; i < itemsCount; i++) {

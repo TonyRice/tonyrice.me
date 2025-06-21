@@ -13,6 +13,8 @@ export const query = graphql`
         date(formatString: "MMMM DD, YYYY")
         shortTitle
         slug
+        homeIndex
+        featured
         cover {
           childImageSharp {
             gatsbyImageData(width: 1200, quality: 90)

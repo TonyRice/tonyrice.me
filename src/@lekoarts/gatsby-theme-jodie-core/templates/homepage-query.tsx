@@ -33,5 +33,20 @@ export const query = graphql`
         __typename
       }
     }
+    blogs: allBlogPost(sort: { date: DESC }, limit: 5) {
+      nodes {
+        slug
+        title: shortTitle
+        date
+        featured
+        homeIndex
+        cover {
+          childImageSharp {
+            gatsbyImageData(width: 1200, quality: 90, formats: [AUTO, WEBP, AVIF])
+          }
+        }
+        __typename
+      }
+    }
   }
 `

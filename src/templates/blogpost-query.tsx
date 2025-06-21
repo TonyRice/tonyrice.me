@@ -15,6 +15,8 @@ export const query = graphql`
       title
       shortTitle
       category
+      homeIndex
+      featured
       cover {
         childImageSharp {
           resize(width: 1200, quality: 85) {
