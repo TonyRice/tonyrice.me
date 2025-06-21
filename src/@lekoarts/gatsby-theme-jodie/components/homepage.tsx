@@ -62,10 +62,11 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
   // Add a custom blog grid item as the last item
   const blogItem = {
     slug: '/blog/',
-    title: 'My Blog',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    title: 'My Blog',
+    shortTitle: 'Blog', // Added shortTitle for type safety
     defer: false,
     cover: {
-      childImageSharp: {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+      childImageSharp: {
         gatsbyImageData: {
           images: { fallback: { src: '/blog_image.png' } },
           layout: 'constrained' as any, // Cast to any to avoid type error
@@ -92,6 +93,7 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
     ? {
         slug: featuredBlog.slug,
         title: featuredBlog.title,
+        shortTitle: featuredBlog.shortTitle || featuredBlog.title, // Ensure shortTitle exists
         defer: false,
         cover: featuredBlog.cover && featuredBlog.cover.childImageSharp && featuredBlog.cover.childImageSharp.gatsbyImageData
           ? { childImageSharp: { gatsbyImageData: featuredBlog.cover.childImageSharp.gatsbyImageData } }
@@ -102,7 +104,7 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
 
   // Filter out projects with defer set to true
   const filteredProjects = projects.nodes.filter(project => !project.defer);
-  let rawItems: typeof filteredProjects = [...pages.nodes, ...filteredProjects];
+  let rawItems: any = [...pages.nodes, ...filteredProjects]; 
 
   // Insert featured blog at the specified homeIndex, or after blogItem if homeIndex is -1/null
   if (featuredBlogItem) {
@@ -143,20 +145,35 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
           {items.length > 0 ? (
             items.map((item, index) => (
               <GridItem to={item.slug} className="item" key={item.title} sx={itemStyles} data-testid={item.title}>
-                {item.cover?.childImageSharp?.gatsbyImageData?.images?.fallback?.src ? (
+                {item.cover?.childImageSharp?.gatsbyImageData ? (
                   <GatsbyImage
                     loading={index === 0 ? `eager` : `lazy`}
                     image={item.cover.childImageSharp.gatsbyImageData}
                     alt=""
+                    style={{ width: '100%', height: 'auto', borderRadius: 8, display: 'block', filter: 'brightness(0.6)' }}
+                    imgStyle={{ borderRadius: 8 }}
                   />
                 ) : (
                   <img
                     src={item.cover?.childImageSharp?.gatsbyImageData?.images?.fallback?.src || '/blog_image.jpg'}
                     alt="Blog"
-                    style={{ width: '100%', height: 'auto', borderRadius: 8 }}
+                    style={{ width: '100%', height: 'auto', borderRadius: 8, display: 'block', filter: 'brightness(0.6)' }}
                   />
                 )}
-                <span>{item.title}</span>
+                <span style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  zIndex: 2,
+                  color: '#fff',
+                  fontWeight: 600,
+                  fontSize: '2rem', // Increased from 1.2rem to 2rem
+                  padding: '1rem',
+                  textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+                  width: '100%',
+                  boxSizing: 'border-box',
+                }}>{item.title}</span>
               </GridItem>
             ))
           ) : (
