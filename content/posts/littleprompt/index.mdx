@@ -11,24 +11,24 @@ keywords: [prompt engineering, node.js, typescript, LLM, openai, gpt, chatgpt, a
 cover: "./littleprompts.png"
 featured: true
 homeIndex: -1
+defer: false
 ---
 
-Hey, I'm Tony. If you're like me, you probably want your code (and your prompts) to just work—no fuss, no mess. I’ve been building stuff for a long time, and if there’s one thing I’ve learned, it’s that a little structure goes a long way, especially when you’re wrangling large language models (LLMs) like GPT or Claude. 
+I've been building stuff for a long time and I've realized that simplicity and structure goes a long way, especially when you’re doing your thing with large language models (LLMs) like ChatGPT or Gemini.
 
-Let’s be real: prompt engineering can get out of hand fast. You start with a simple string, and before you know it, you’ve got a spaghetti mess of instructions, random formatting, and a headache trying to debug why your AI is suddenly writing Shakespearean sonnets when you just wanted a JSON object. Been there, dude.
+You ever prompt a model and notice it start's hullicating within the first 5 prompts? It started with a few questions, broken into a request including contexts from a bunch of random thoughts and ideas you have and BOOM, ChatGPT is spitting out a rap song when you're requesting a JSON reply. Lol I'm kidding, that doesn't happen. Close enough though.
 
-So, here’s my take on building prompts in Node.js and TypeScript: keep it structured, keep it chainable, and don’t overthink it. I’ll show you how I do it, share some code, and maybe save you a few hours of frustration.
+So, here’s my take on building prompts in Node.js and TypeScript: keep it structured, keep it chainable, and don’t overthink it.
 
 ## Why Bother Structuring Prompts?
 
-- **Clarity:** If you want the AI to give you good answers, you gotta be clear. No one likes guessing games—not even a language model.
-- **Reusability:** Build little prompt pieces you can use again and again. Like LEGOs, but for your brain.
-- **Maintainability:** When you come back to your code in six months, you’ll thank yourself for not making it a dumpster fire.
-- **Type Safety:** TypeScript is your friend. Trust me, it’ll catch your silly mistakes before they become real problems.
+- **Clarity:** If you want the AI to give you solid responses, you gotta be clear. No one likes guessing games—not even a language model.
+- **Reusability:** Build little prompt pieces you can use again and again. Like LEGOs, but for your brain. Helps you keep your sanity too.
+- **Maintainability:** Speaking of sanity, when you come back to your code in six months, you’ll thank yourself for not making it a dumpster fire.
 
-## Meet `littleprompt`: My Go-To Prompt Library
+## Meet `littleprompt`
 
-[`littleprompt`](https://www.npmjs.com/package/littleprompt) is a tiny, chainable library for Node.js/TypeScript. It lets you build prompts step by step, adding instructions as you go. It’s not magic, but it makes life easier—especially if you’re a little neurodivergent like me and need things to be, well, not chaos.
+[`littleprompt`](https://www.npmjs.com/package/littleprompt) is a tiny, chainable library for Node.js/TypeScript I whipped up. It lets you build prompts step by step, adding instructions as you go. It’s not magic, but it makes life easier—especially if you’re a little neurodivergent like me and need things to be, well, not chaos.
 
 ### Install It
 
@@ -68,6 +68,16 @@ System:
   JSON Response Structure: {}
 
 User: What are the first 3 steps to making a website?
+```
+
+The response is structured, clear, and ready to go. You can easily tweak the system instructions or user questions without rewriting everything.
+
+```JSON
+{
+  "step_1": "Define purpose and target audience — unless you enjoy building aimless digital sandcastles.",
+  "step_2": "Choose a domain name and web host — think of it as naming your baby and finding it a cozy crib on the internet.",
+  "step_3": "Design layout and structure using HTML/CSS — aka telling your site not to look like it time-traveled from 1997."
+}
 ```
 
 ## Stuff That Makes Life Easier
@@ -124,14 +134,9 @@ const reviewPrompt = GrumpyReviewer()
 console.log(reviewPrompt);
 ```
 
-## Try It Yourself: Node.js & TypeScript Prompt Engineering Examples
+## Want to help improve littleprompt?
 
-Check out the [`examples/`](https://github.com/TonyRice/littleprompt/tree/main/examples) directory in the littleprompt repo for ready-to-run Node.js and TypeScript code samples that show how to:
-
-- Build prompts for OpenAI, Anthropic, and other LLM APIs
-- Use chainable prompt logic in real-world projects
-- Apply best practices for maintainable, readable prompt code
-
+Check out the [`repo`](https://github.com/TonyRice/littleprompt); contribute, or just give it a star if you find it useful. I’m always looking to make it better and more useful for everyone.
 ---
 
-Prompt engineering doesn’t have to be a mess. With a little structure and a chainable approach, you can build prompts that work, are easy to read, and don’t make you want to pull your hair out. If you’ve got questions or want to swap ideas, hit me up. Happy prompting, dude! 🤏
+Prompt engineering doesn’t have to be a mess. With a little structure and a chainable approach, you can build prompts that work, are easy to read, and don’t make you want to pull your hair out. If you’ve got questions or want to swap ideas, hit me up. Happy prompting! 🤏
