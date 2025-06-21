@@ -9,17 +9,71 @@ category: ""
 date: "2024-03-11"
 ---
 
-<div style={{ margin: `0 auto`, maxWidth: `70ch`, padding: `2rem` }}>
+<style>{`
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  #resume-content, #resume-content * {
+    visibility: visible !important;
+  }
+  #resume-content {
+    position: absolute !important;
+    left: 0; top: 0; width: 100vw; background: white;
+    padding: 2rem !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+    display: block !important;
+    height: 0 !important;
+    width: 100% !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+  }
+  @page {
+    margin: 0.5in;
+    size: auto;
+    margin-top: 0.5in;
+    margin-bottom: 0.5in;
+    margin-left: 0.5in;
+    margin-right: 0.5in;
+  }
+  html, body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* Hide page URL and title in Chrome/Edge/Firefox */
+  @page {
+    /* These are browser hints, not all browsers support them */
+    /* Remove header/footer in Chrome/Edge */
+    margin-top: 0.5in;
+    margin-bottom: 0.5in;
+    margin-left: 0.5in;
+    margin-right: 0.5in;
+  }
+  /* Remove default header/footer in Firefox */
+  @top-center, @bottom-center {
+    content: none !important;
+  }
+}
+`}</style>
 
-<p><em>Loading ancient method of communicating worthiness to hiring managers... complete.</em></p>
+<div id="resume-content" style={{ margin: `0 auto`, maxWidth: `70ch`, padding: `2rem` }}>
 
-<hr/>
+<img src="/faceshot.jpeg" alt="Tony Rice headshot" style={{ display: 'block', margin: '0 auto 1.5rem auto', width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', boxShadow: '0 2px 8px rgba(0,0,0,0.10)' }} />
 
 <h1 data-testid="page-title">Tony Rice</h1>
 <p>Entrepreneur & Creator</p>
 <p>Beloit, Wisconsin</p>
 <p>+1-608-571-2809 | tony@tonyrice.me | <a href="https://www.linkedin.com/in/iamtonyrice" target="_blank" rel="noopener noreferrer">linkedin.com/in/iamtonyrice</a> | <a href="https://tonyrice.me" target="_blank" rel="noopener noreferrer">tonyrice.me</a></p>
-<p><a href="/tonyrice_it.pdf" download>Download PDF Resume</a></p>
 
 ## Professional Summary
 
@@ -39,6 +93,9 @@ Highly adaptable IT professional with a passion for solving problems. Proven abi
 
 * Played a key role in developing the Universal Shopping Cart platform, which contributed to Rakuten's $1 billion acquisition of Ebates.
 * Architected and scaled a cloud-based backend platform to support 100K+ monthly transactions, optimizing performance and ensuring 99.9% uptime.
+
+<div className="page-break" />
+
 
 ---
 
@@ -70,6 +127,7 @@ Highly adaptable IT professional with a passion for solving problems. Proven abi
 * **4-10+ Years:** NodeJS, Node APIs, Typescript, Java, Python, Bash
 * **1+ Years:** Ruby, C#, Go/Golang, Lua
 
+
 **FRONTEND DEVELOPMENT**
 * **4-10+ Years:** Angular/AngularJS, React/ReactJS, Handlebars.js, templating, CSS
 * **1-4 Years:** Laravel, Vue.js, Next.js, Webpack, Gatsby, Bootstrap, Meteor
@@ -98,13 +156,17 @@ Highly adaptable IT professional with a passion for solving problems. Proven abi
 **MOBILE DEVELOPMENT**
 * **2+ Years:** Basic4Droid/B4X
 * **1+ Years:** Apache Cordova, React Native
+
 ---
+
+<div className="page-break" />
+
 
 ## Work History
 
 **Founder & Lead Architect** | Dusty Beetles (Hybrid) | 2022-2024
 * Developed and managed the Frontend and the Backend for e-commerce platform
-* Managed infraustructure in a dedicated environment using VMWare vSphere
+* Managed infraustructure in a dedicated envirfonment using VMWare vSphere
 * Migrated core services to AWS while maintaining a hybrid infrastructure
 * Built connections, lead product development and MVP testing
 
@@ -121,6 +183,8 @@ Highly adaptable IT professional with a passion for solving problems. Proven abi
 * Developed an HTML templating engine, reducing marketing email production time by 90%.
 * Troubleshooted and resolved a critical call center issue, restoring service availability.
 
+<div className="page-break" />
+
 **Full-stack Software Engineer** | Storyscript (Remote) | 2019-2020
 * Accelerated the development of the Storyscript Runtime by implementing key features.
 * Collaborated with a cross-functional team to ensure the ongoing development of backend components.
@@ -129,6 +193,7 @@ Highly adaptable IT professional with a passion for solving problems. Proven abi
 * Enhanced platform functionality and reliability by resolving bugs and developing partner integrations.
 * Supported sales efforts by providing technical expertise on client calls.
 * Ensured code quality and security through proactive vulnerability identification.
+
 
 **Founder & Full-stack Software Engineer** | The Baked Potato Store | 2018-2019
 * Developed automated dropshipping solution reducing 90% of the daily workload
@@ -145,6 +210,8 @@ Highly adaptable IT professional with a passion for solving problems. Proven abi
 **Founder & Lead Architect** | Automately Cloud | 2014-2017
 * Architected Automately Core, an open-source distributed backend platform.
 * Developed the frontend, backend, and platform tooling.
+
+<div className="page-break" />
 
 **Software Engineer** | Fatwallet/Ebates (Hybrid) | 2013-2017
 * Developed web automation solutions to improve checkout processes for various merchants.
@@ -171,6 +238,11 @@ Highly adaptable IT professional with a passion for solving problems. Proven abi
 * Started IT Support company before I graduated high-school
 * Managed Windows Server, ESX Servers, Removed Viruses and Installed OSes
 * Provided direct customer service to over 10+ customers weekly
-* Repaired computers for residents
 
 </div>
+
+<p style={{ marginTop: '2.5rem', textAlign: 'center' }} className="no-print">
+  <a href="#" onClick={e => { e.preventDefault(); window.print(); }} style={{ fontSize: '1rem', textDecoration: 'underline', color: '#222', cursor: 'pointer' }}>
+    Download PDF / Print this resume
+  </a>
+</p>
