@@ -1,0 +1,11 @@
+.homepage-grid-item {
+  position: relative;
+}
+.homepage-grid-image {
+  transition: filter 0.2s;
+}
+.homepage-grid-item:hover .homepage-grid-image,
+.homepage-grid-item:focus .homepage-grid-image,
+.homepage-grid-item:active .homepage-grid-image {
+  filter: brightness(0.6);
+}

@@ -11,6 +11,7 @@ import { visuallyHidden } from "@lekoarts/gatsby-theme-jodie/src/styles/utils"
 import modifyGrid from "../utils/modify-grid"
 import Seo from "@lekoarts/gatsby-theme-jodie/src/components/seo"
 import { Tracing } from "node:trace_events"
+import "./homepage-grid.css"
 
 export type JodieHomepageProps = {
   projects: {
@@ -144,36 +145,48 @@ const Homepage: React.FC<PageProps<JodieHomepageProps>> = ({ data: { pages, proj
         <div className={`item-list div${divisor}`}>
           {items.length > 0 ? (
             items.map((item, index) => (
-              <GridItem to={item.slug} className="item" key={item.title} sx={itemStyles} data-testid={item.title}>
+              <GridItem
+                to={item.slug}
+                className="item homepage-grid-item"
+                key={item.title}
+                sx={itemStyles}
+                data-testid={item.title}
+              >
                 {item.cover?.childImageSharp?.gatsbyImageData ? (
                   <GatsbyImage
                     loading={index === 0 ? `eager` : `lazy`}
                     image={item.cover.childImageSharp.gatsbyImageData}
                     alt=""
-                    style={{ width: '100%', height: 'auto', borderRadius: 8, display: 'block', filter: 'brightness(0.6)' }}
+                    className="homepage-grid-image"
+                    style={{ width: '100%', height: 'auto', borderRadius: 8, display: 'block' }}
                     imgStyle={{ borderRadius: 8 }}
                   />
                 ) : (
                   <img
                     src={item.cover?.childImageSharp?.gatsbyImageData?.images?.fallback?.src || '/blog_image.jpg'}
                     alt="Blog"
-                    style={{ width: '100%', height: 'auto', borderRadius: 8, display: 'block', filter: 'brightness(0.6)' }}
+                    className="homepage-grid-image"
+                    style={{ width: '100%', height: 'auto', borderRadius: 8, display: 'block' }}
                   />
                 )}
-                <span style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  zIndex: 2,
-                  color: '#fff',
-                  fontWeight: 600,
-                  fontSize: '2rem', // Increased from 1.2rem to 2rem
-                  padding: '1rem',
-                  textShadow: '0 2px 8px rgba(0,0,0,0.9)',
-                  width: '100%',
-                  boxSizing: 'border-box',
-                }}>{item.title}</span>
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 2,
+                    color: '#fff',
+                    fontWeight: 600,
+                    fontSize: '2rem',
+                    padding: '1rem',
+                    textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                  }}
+                >
+                  {item.title}
+                </span>
               </GridItem>
             ))
           ) : (
