@@ -21,11 +21,9 @@ const config: GatsbyConfig = {
       resolve: `@lekoarts/gatsby-theme-jodie`,
       options: {
         navigation: [
-          { name: `About Me`, slug: `/about` },
           { name: `Blog`, slug: `/blog` },
           { name: `Contact`, slug: `/contact` },
           { name: `Portfolio`, slug: `/portfolio` },
-
         ],
       },
     },
