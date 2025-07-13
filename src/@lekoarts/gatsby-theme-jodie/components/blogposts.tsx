@@ -48,7 +48,12 @@ const BlogPosts: React.FC<PageProps<JodieBlogPostsProps>> = ({ data: { blogs } }
                 alt="Image" 
                 style={{ filter: 'brightness(0.7)', transition: 'filter 0.2s', borderRadius: 8 }}
               />
-            ) : (
+            ) : blog.cover?.publicURL.endsWith('.svg') ? (
+              <img 
+                src={blog.cover.publicURL}
+                alt="Filler" 
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8, display: 'block', filter: 'brightness(0.7)', transition: 'filter 0.2s' }} 
+              />) : (
               <img 
                 src="/blog_image.png" 
                 alt="Filler" 
