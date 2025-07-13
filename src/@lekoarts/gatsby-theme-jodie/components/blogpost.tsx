@@ -56,7 +56,13 @@ const BlogPost: React.FC<React.PropsWithChildren<PageProps<JodieBlogPostProps>>>
           alt={blog.title}
           style={{ width: 120, height: 120, objectFit: 'cover', borderRadius: 8, marginBottom: 24 }}
         />
-      ) : (
+      ) : blog.cover?.publicURL.endsWith('.svg') ?  (
+        <img
+          src={blog.cover.publicURL}
+          alt="Filler"
+          style={{ width: 120, height: 120, objectFit: 'cover', borderRadius: 8, marginBottom: 24 }}
+        />
+      ): (
         <img
           src="/blog_image.png"
           alt="Filler"
