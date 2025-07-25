@@ -1,5 +1,8 @@
 name: Auto Merge Workflow
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -10,15 +13,23 @@ on:
 
 jobs:
   merge-to-main:
-    if: github.event.inputs.approved == 'true'
+    if: ${{ github.event.inputs.approved == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Merge
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+
+      - name: Merge to main
+        run: |
+          git fetch origin
           git checkout main
           git merge ${{ github.ref_name }}
           git push origin main
