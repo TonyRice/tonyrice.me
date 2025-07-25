@@ -1,0 +1,24 @@
+name: Auto Merge Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved:
+        description: 'Approval flag'
+        required: true
+        default: 'false'
+
+jobs:
+  merge-to-main:
+    if: github.event.inputs.approved == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Merge
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git checkout main
+          git merge ${{ github.ref_name }}
+          git push origin main
