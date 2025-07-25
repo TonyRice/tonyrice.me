@@ -1,0 +1,14 @@
+<svg width="640" height="360" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="360" rx="32" fill="#fff"/>
+  <!-- Bold geometric shapes -->
+  <rect x="60" y="60" width="120" height="120" rx="24" fill="#232323"/>
+  <circle cx="500" cy="180" r="60" fill="#5551FF" />
+  <rect x="260" y="240" width="120" height="32" rx="16" fill="#232323" />
+  <rect x="290" y="80" width="180" height="32" rx="16" fill="#FFC718"/>
+  <rect x="80" y="250" width="70" height="22" rx="11" fill="#5551FF" opacity="0.16"/>
+  <!-- Hello World text -->
+  <text x="50%" y="50%" text-anchor="middle" fill="#232323" font-family="Work Sans, sans-serif" font-size="54" font-weight="bold" dy=".33em" letter-spacing="2">Hello World</text>
+  <!-- minimalist corner accent -->
+  <rect x="580" y="35" width="18" height="72" rx="9" fill="#FFC718"/>
+  <circle cx="100" cy="320" r="8" fill="#5551FF" opacity="0.33"/>
+</svg>
